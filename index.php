@@ -1,3 +1,8 @@
+<?php 
+include_once ("connection/common/db_helper.php");
+
+user_login();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

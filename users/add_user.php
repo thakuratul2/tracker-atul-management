@@ -41,18 +41,14 @@ user_not_login();
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Users > Add Clients</h4>
+                    <h4 class="card-title">Users > Add Users</h4>
                     <form class="forms-sample" id="userForm">
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Client Name</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Client Name" name="name" required>
+                            <label for="exampleInputUsername1">Username</label>
+                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Client UserName</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Client Username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Client Email</label>
+                            <label for="exampleInputEmail1">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" required>
                         </div>
                         <div class="form-group">
@@ -66,8 +62,8 @@ user_not_login();
                         </div>
                         
                         <div class="form-group">
-                            <label for="exampleInputSalary">Mobile</label>
-                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Mobile" name="mobile" required>
+                            <label for="exampleInputSalary">Monthly Salary</label>
+                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Monthly Salary" name="salary" required>
                         </div>
                         
                         <div class="form-group">
@@ -78,7 +74,7 @@ user_not_login();
                             </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary me-2">Add Client</button>
+                        <button type="submit" class="btn btn-primary me-2">Add User</button>
                         <button type="reset" class="btn btn-light">Cancel</button>
                     </form>
                     <div id="responseMessage" style="margin-top: 10px;"></div>
@@ -126,14 +122,14 @@ user_not_login();
         e.preventDefault();
         var formData = $(this).serialize();
         $.ajax({
-            url: '../method/client_method.php',
+            url: '../method/user_method.php',
             type: 'POST',
             data: formData,
             success: function(response) {
                 if (response == 'Success') {
                     console.log(response);
 
-                    $('#responseMessage').text('Client Added Successfully').css('color', 'green');
+                    $('#responseMessage').text('User Added Successfully').css('color', 'green');
                 } else {
                     $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
                 }
