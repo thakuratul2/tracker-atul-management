@@ -167,10 +167,11 @@ function display_clients($conn)
     
     if(mysqli_num_rows($result) > 0) {
         
+        $snr = 1;
         
         while($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
-            echo "<td>".$row['id']."</td>";
+            echo "<td>".$snr++."</td>";
             echo "<td>".$row['name']."</td>";
             echo "<td>".$row['username']."</td>";
 
