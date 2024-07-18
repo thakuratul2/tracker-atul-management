@@ -46,10 +46,15 @@ function greetfunction(){
         echo "Good Morning";
     }
     else if($time >= 12 && $time <= 18){
+        
         echo "Good Afternoon";
     }
     else if($time >= 19 && $time <= 4){
+        
         echo "Good Evening";
+    }
+    else{
+        echo "Good Night";
     }
 }
 
@@ -112,8 +117,8 @@ else{
         $difference = $clients_today - $clients_yesterday;
         $class = $difference >= 0 ? 'text-success' : 'text-danger';
         $icon = $difference >= 0 ? 'mdi-menu-up' : 'mdi-menu-down';
-        $difference_percentage = ($clients_yesterday == 0) ? $difference * 100 : abs(($difference / $clients_yesterday) * 100);
-        $difference_text = number_format($difference_percentage, 1);
+        $difference_percentage = ($clients_yesterday == 0) ? $difference: abs(($difference / $clients_yesterday));
+        $difference_text = $difference_percentage;
     
        
         return [
@@ -149,8 +154,8 @@ else{
         $difference = $clients_today - $clients_yesterday;
         $class = $difference >= 0 ? 'text-success' : 'text-danger';
         $icon = $difference >= 0 ? 'mdi-menu-up' : 'mdi-menu-down';
-        $difference_percentage = ($clients_yesterday == 0) ? $difference * 100 : abs(($difference / $clients_yesterday) * 100);
-        $difference_text = number_format($difference_percentage, 1);
+        $difference_percentage = ($clients_yesterday == 0) ? $difference : abs(($difference / $clients_yesterday));
+        $difference_text = $difference_percentage;
     
        
         return [
@@ -160,43 +165,51 @@ else{
         ];
     }
 }
-function display_clients($conn)
+
+if(function_exists('display_clients'))
 {
-    $sql = "SELECT * FROM clients";
-    $result = mysqli_query($conn, $sql);
+    echo "Function display_clients already exists";
+}
+else
+{
+    function display_clients($conn)
+    {
+        $sql = "SELECT * FROM clients";
+        $result = mysqli_query($conn, $sql);
+        
+        if(mysqli_num_rows($result) > 0) {
+            
+            $snr = 1;
+            
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>".$snr++."</td>";
+                echo "<td>".$row['name']."</td>";
+                echo "<td>".$row['username']."</td>";
     
-    if(mysqli_num_rows($result) > 0) {
-        
-        $snr = 1;
-        
-        while($row = mysqli_fetch_assoc($result)) {
-            echo "<tr>";
-            echo "<td>".$snr++."</td>";
-            echo "<td>".$row['name']."</td>";
-            echo "<td>".$row['username']."</td>";
-
-            echo "<td>".$row['email']."</td>";
-            if ($row['address'] == 0 || $row['address'] == null) {
-                echo "<td>No address found</td>";
-            } else {
-                echo "<td>".$row['address']."</td>";
+                echo "<td>".$row['email']."</td>";
+                if ($row['address'] == 0 || $row['address'] == null) {
+                    echo "<td>No address found</td>";
+                } else {
+                    echo "<td>".$row['address']."</td>";
+                }
+                echo "<td>".$row['mobile']."</td>";
+                if ($row['status'] == 0) {
+                    echo "<td> <label class='badge badge-success'>Enable</td>";
+                } else {
+                    echo "<td> <label class='badge badge-danger'>Disable</td>";
+                }
+                echo "<td>
+                        <a href='../clients/client_edit.php?id=".$row['id']."' class='btn btn-success'>Edit</a>
+                        <a href='../clients/client_delete.php?id=".$row['id']."' class='btn btn-danger'>Delete</a>
+                    </td>";
+    
+                echo "</tr>";
             }
-            echo "<td>".$row['mobile']."</td>";
-            if ($row['status'] == 0) {
-                echo "<td> <label class='badge badge-success'>Enable</td>";
-            } else {
-                echo "<td> <label class='badge badge-danger'>Disable</td>";
-            }
-            echo "<td>
-                    <a href='../clients/client_edit.php?id=".$row['id']."' class='btn btn-success'>Edit</a>
-                    <a href='../clients/client_delete.php?id=".$row['id']."' class='btn btn-danger'>Delete</a>
-                </td>";
-
-            echo "</tr>";
+            
+            
+        } else {
+            echo "No clients found.";
         }
-        
-        
-    } else {
-        echo "No clients found.";
     }
 }

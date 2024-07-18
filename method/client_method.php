@@ -31,9 +31,8 @@ if ($check_result->num_rows > 0) {
     if ($check_user_result->num_rows > 0) {
         echo "Email already exists in user table";
     } else {
-        $insert_sql = "INSERT INTO clients (name, username, email, password, address, mobile, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $insert_sql = "INSERT INTO clients (`name`, `username`, `email`, `password`, `address`, `mobile`, `status`) VALUES ('$name', '$username', '$email', '$password', '$address', '$mobile', '$status')";
         $insert_stmt = $conn->prepare($insert_sql);
-        $insert_stmt->bind_param("ssssdss", $name, $username, $email, $hashed_password, $address, $mobile, $status);
 
         if ($insert_stmt->execute()) {
             echo "Success";
