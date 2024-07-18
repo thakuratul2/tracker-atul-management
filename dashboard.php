@@ -44,15 +44,7 @@ user_not_login();
                       <li class="nav-item">
                         <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab" aria-selected="false">Audiences</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#demographics" role="tab" aria-selected="false">Demographics</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
-                      </li>
+                        
                     </ul>
                     <div>
                       <div class="btn-wrapper">
@@ -70,17 +62,22 @@ user_not_login();
                             <div>
                               <p class="statistics-title">Total Users</p>
                               <h3 class="rate-percentage"><?php totalusers($conn); ?></h3>
-                              <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+                              <?php 
+                              $clients_diff = get_difference_user_status($conn);
+                        
+                              ?>
+                              <p class="<?php echo $clients_diff['class']; ?> d-flex"><i class="mdi <?php echo $clients_diff['icon']; ?>"></i><span><?php echo $clients_diff['difference_text']; ?></span></p>                            </div>
+                            <div>
+                              <p class="statistics-title">Total Clients</p>
+                              <h3 class="rate-percentage"><?php get_total_clients($conn);?></h3>
+                              <?php 
+                              $clients_diff = get_difference_client_status($conn);
+                              ?>
+                              <p class="<?php echo $clients_diff['class']; ?> d-flex"><i class="mdi <?php echo $clients_diff['icon']; ?>"></i><span><?php echo $clients_diff['difference_text']; ?></span></p>
                             </div>
                             <div>
-                              <p class="statistics-title">Page Views</p>
-                              <h3 class="rate-percentage">7,682</h3>
-                              <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
-                            </div>
-                            <div>
-                              <p class="statistics-title">New Sessions</p>
+                              <p class="statistics-title">Total Projects</p>
                               <h3 class="rate-percentage">68.8</h3>
-                              <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
                             </div>
                             <div class="d-none d-md-block">
                               <p class="statistics-title">Avg. Time on Site</p>

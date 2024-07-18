@@ -41,7 +41,7 @@ user_not_login();
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Users > Add Clients</h4>
+                    <h4 class="card-title">Clients > Add Clients</h4>
                     <form class="forms-sample" id="userForm">
                         <div class="form-group">
                             <label for="exampleInputUsername1">Client Name</label>

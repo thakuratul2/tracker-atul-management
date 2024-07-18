@@ -63,6 +63,100 @@ function totalusers($conn){
         echo $rows;
     }
     else{
-        echo "No User";
+        echo "0";
+    }
+}
+
+if(function_exists('get_total_clients'))
+{
+    echo "Function get_total_clients already exists";
+}
+else
+{
+    function get_total_clients($conn)
+    {
+        $sql = "select * from `clients`";
+        $result = mysqli_query($conn , $sql);
+        $rows = mysqli_num_rows($result);
+        if($rows > 0){
+            echo $rows;
+        }
+        else{
+            echo "0";
+        }
+    }
+}
+
+if(function_exists('get_difference_client_status'))
+{
+    echo "Function get_difference_client_statu already exists";
+}
+else{
+
+    function get_difference_client_status($conn)
+    {
+        $yesterday = date('Y-m-d', strtotime('-1 day'));
+        $sql_yesterday = "SELECT COUNT(*) as count FROM clients WHERE DATE(created_at) = '$yesterday'";
+        $result_yesterday = $conn->query($sql_yesterday);
+        $row_yesterday = $result_yesterday->fetch_assoc();
+        $clients_yesterday = $row_yesterday['count'];
+    
+      
+        $today = date('Y-m-d');
+        $sql_today = "SELECT COUNT(*) as count FROM clients WHERE DATE(created_at) = '$today'";
+        $result_today = $conn->query($sql_today);
+        $row_today = $result_today->fetch_assoc();
+        $clients_today = $row_today['count'];
+    
+        
+        $difference = $clients_today - $clients_yesterday;
+        $class = $difference >= 0 ? 'text-success' : 'text-danger';
+        $icon = $difference >= 0 ? 'mdi-menu-up' : 'mdi-menu-down';
+        $difference_percentage = ($clients_yesterday == 0) ? $difference * 100 : abs(($difference / $clients_yesterday) * 100);
+        $difference_text = number_format($difference_percentage, 1);
+    
+       
+        return [
+            'class' => $class,
+            'icon' => $icon,
+            'difference_text' => $difference_text
+        ];
+    }
+}
+
+if(function_exists('get_difference_user_status'))
+{
+    echo "Function get_difference_client_statu already exists";
+}
+else{
+
+    function get_difference_user_status($conn)
+    {
+        $yesterday = date('Y-m-d', strtotime('-1 day'));
+        $sql_yesterday = "SELECT COUNT(*) as count FROM users WHERE DATE(created_at) = '$yesterday'";
+        $result_yesterday = $conn->query($sql_yesterday);
+        $row_yesterday = $result_yesterday->fetch_assoc();
+        $clients_yesterday = $row_yesterday['count'];
+    
+      
+        $today = date('Y-m-d');
+        $sql_today = "SELECT COUNT(*) as count FROM users WHERE DATE(created_at) = '$today'";
+        $result_today = $conn->query($sql_today);
+        $row_today = $result_today->fetch_assoc();
+        $clients_today = $row_today['count'];
+    
+        
+        $difference = $clients_today - $clients_yesterday;
+        $class = $difference >= 0 ? 'text-success' : 'text-danger';
+        $icon = $difference >= 0 ? 'mdi-menu-up' : 'mdi-menu-down';
+        $difference_percentage = ($clients_yesterday == 0) ? $difference * 100 : abs(($difference / $clients_yesterday) * 100);
+        $difference_text = number_format($difference_percentage, 1);
+    
+       
+        return [
+            'class' => $class,
+            'icon' => $icon,
+            'difference_text' => $difference_text
+        ];
     }
 }

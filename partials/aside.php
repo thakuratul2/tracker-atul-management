@@ -168,7 +168,7 @@
               <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"><a class="nav-link" href="../users/add_user.php">Add Users</a></li>
-                  <li class="nav-item"><a class="nav-link" href="../users/all_users.php">All Users</a></li>
+                  <li class="nav-item"><a class="nav-link" href="../users/all_user.php">All Users</a></li>
 
                 </ul>
               </div>
@@ -176,12 +176,14 @@
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                 <i class="menu-icon mdi mdi-chart-line"></i>
-                <span class="menu-title">Charts</span>
+                <span class="menu-title">Projects</span>
                 <i class="menu-arrow"></i>
               </a>
               <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../projects/add_project.php">Add Projects</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="../projects/all_project.php">All Projects</a></li>
+
                 </ul>
               </div>
             </li>

@@ -38,55 +38,47 @@ user_not_login();
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Users > All Users</h4>
-                    </p>
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>User</th>
-                            <th>Product</th>
-                            <th>Sale</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Jacob</td>
-                            <td>Photoshop</td>
-                            <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                          </tr>
-                          <tr>
-                            <td>Messsy</td>
-                            <td>Flash</td>
-                            <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
-                            <td><label class="badge badge-warning">In progress</label></td>
-                          </tr>
-                          <tr>
-                            <td>John</td>
-                            <td>Premier</td>
-                            <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
-                            <td><label class="badge badge-info">Fixed</label></td>
-                          </tr>
-                          <tr>
-                            <td>Peter</td>
-                            <td>After effects</td>
-                            <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
-                            <td><label class="badge badge-success">Completed</label></td>
-                          </tr>
-                          <tr>
-                            <td>Dave</td>
-                            <td>53275535</td>
-                            <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
-                            <td><label class="badge badge-warning">In progress</label></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <h4 class="card-title">Projects > Add Projects</h4>
+                    <form class="forms-sample" id="userForm">
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Project Name</label>
+                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Project Start</label>
+                            <input type="date" class="form-control datepicker" id="exampleInputDate1" placeholder="Date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Project End</label>
+                            <input type="date" class="form-control datepicker" id="exampleInputDate1" placeholder="Date" name="date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exampleInputSalary">Project Budget</label>
+                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Monthly Salary" name="salary" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputStatus">Project Type</label>
+                            <select class="form-control" id="exampleInputStatus" name="status" required>
+                                <option value="0">Enable</option>
+                                <option value="1">Disable</option>
+                            </select>
+                        <div class="form-group">
+                            <label for="exampleInputStatus">Status</label>
+                            <select class="form-control" id="exampleInputStatus" name="status" required>
+                                <option value="0">Working</option>
+                                <option value="1">Completed</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary me-2">Add User</button>
+                        <button type="reset" class="btn btn-light">Cancel</button>
+                    </form>
+                    <div id="responseMessage" style="margin-top: 10px;"></div>
+                  
                   </div>
                 </div>
               </div>

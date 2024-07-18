@@ -13,14 +13,25 @@ if(isset($_POST['submit']))
 
     $user = mysqli_fetch_assoc($result);
     
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['user_name'] = $user['name'];
-    $_SESSION['user_email'] = $user['email'];
-
-
     if($user > 0){
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_email'] = $user['email'];
          header("location: ../dashboard.php");
     }else{
-        header("location: ../index.php");
+        $sql = "SELECT `email`, `id`, `username`, `password` FROM `clients` WHERE username = '$name' AND password = MD5('$password')";
+        $result = mysqli_query($conn , $sql);
+        $client = mysqli_fetch_assoc($result);
+        
+        if($client > 0){
+            $_SESSION['user_id'] = $client['id'];
+            $_SESSION['user_name'] = $client['username'];
+            $_SESSION['user_email'] = $client['email'];
+
+            header("location: ../dashboard.php");
+
+        }else{
+            header("location: ../index.php");
+        }
     }
 }
