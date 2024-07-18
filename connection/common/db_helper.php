@@ -160,3 +160,42 @@ else{
         ];
     }
 }
+function display_clients($conn)
+{
+    $sql = "SELECT * FROM clients";
+    $result = mysqli_query($conn, $sql);
+    
+    if(mysqli_num_rows($result) > 0) {
+        
+        
+        while($row = mysqli_fetch_assoc($result)) {
+            echo "<tr>";
+            echo "<td>".$row['id']."</td>";
+            echo "<td>".$row['name']."</td>";
+            echo "<td>".$row['username']."</td>";
+
+            echo "<td>".$row['email']."</td>";
+            if ($row['address'] == 0 || $row['address'] == null) {
+                echo "<td>No address found</td>";
+            } else {
+                echo "<td>".$row['address']."</td>";
+            }
+            echo "<td>".$row['mobile']."</td>";
+            if ($row['status'] == 0) {
+                echo "<td> <label class='badge badge-success'>Enable</td>";
+            } else {
+                echo "<td> <label class='badge badge-danger'>Disable</td>";
+            }
+            echo "<td>
+                    <a href='../clients/client_edit.php?id=".$row['id']."' class='btn btn-success'>Edit</a>
+                    <a href='../clients/client_delete.php?id=".$row['id']."' class='btn btn-danger'>Delete</a>
+                </td>";
+
+            echo "</tr>";
+        }
+        
+        
+    } else {
+        echo "No clients found.";
+    }
+}
