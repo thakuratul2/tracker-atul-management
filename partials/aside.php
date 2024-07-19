@@ -169,7 +169,7 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"><a class="nav-link" href="../users/add_user.php">Add Users</a></li>
                   <li class="nav-item"><a class="nav-link" href="../users/all_user.php">All Users</a></li>
-
+                  <li class="nav-item"><a class="nav-link" href="../users/users_role.php">Users Role</a></li>
                 </ul>
               </div>
             </li>
@@ -183,6 +183,8 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="../projects/add_project.php">Add Projects</a></li>
                   <li class="nav-item"> <a class="nav-link" href="../projects/all_project.php">All Projects</a></li>
+
+                  <li class="nav-item"> <a class="nav-link" href="../projects/project_type.php">Project Type</a></li>
 
                 </ul>
               </div>

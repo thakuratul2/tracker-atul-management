@@ -1,6 +1,7 @@
 <?php
 
 include_once '../connection/common/db_helper.php';
+include_once '../connection/db.php';
 
 user_not_login();
 ?>
@@ -41,35 +42,15 @@ user_not_login();
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Clients > Add Clients</h4>
+                    <h4 class="card-title">Projects > Add Projects Type</h4>
                     <form class="forms-sample" id="userForm">
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Client Name</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Client Name" name="name" required>
+                            <label for="exampleInputUsername1">Project Type</label>
+                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Project Type Name" name="project_type" required>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputUsername1">Client UserName</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Client Username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Client Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="exampleInputAddress">Address</label>
-                            <input type="text" class="form-control" id="exampleInputAddress" placeholder="Address" name="address" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="exampleInputSalary">Mobile</label>
-                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Mobile" name="mobile" required>
-                        </div>
-                        
+                    
+                       
+                       
                         <div class="form-group">
                             <label for="exampleInputStatus">Status</label>
                             <select class="form-control" id="exampleInputStatus" name="status" required>
@@ -78,11 +59,45 @@ user_not_login();
                             </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary me-2">Add Client</button>
+                        <button type="submit" class="btn btn-primary me-2">Add Project Type</button>
                         <button type="reset" class="btn btn-light">Cancel</button>
                     </form>
                     <div id="responseMessage" style="margin-top: 10px;"></div>
                   
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover" id="userTable">
+                      <thead>
+                        <tr>
+                          <th>S.No</th>
+                          <th>Role</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        
+                        $roles = fetch_project_type($conn);
+                        $snr = 1; 
+                        foreach ($roles as $role) {
+                          
+                          echo "<tr>";
+                          echo "<td>".$snr++."</td>";
+                          echo "<td>" . ucfirst($role['project_type']) . "</td>";
+                          if ($role['status'] == 0) {
+                            echo "<td> <label class='badge badge-success'>Enable</td>";
+                        } else {
+                            echo "<td> <label class='badge badge-danger'>Disable</td>";
+                        }
+                        echo "<td>
+                        <a href='../projects/delete_type.php?p_type=" . $role['p_type'] . "' class='btn btn-danger'>Delete</a>
+                    </td>";
+                          echo "</tr>";
+                        }
+                        ?>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -122,35 +137,28 @@ user_not_login();
     <!-- End custom js for this page-->
     <script>
     $(document).ready(function() {
-      $('#userForm').submit(function(e) {
+    $('#userForm').submit(function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
-        var mobile = $('#exampleInputSalary').val();
-        
-        if (mobile.length !== 10) {
-          $('#responseMessage').text('Mobile number must be exactly 10 digits').css('color', 'red');
-          return;
-        }
-        
         $.ajax({
-          url: '../method/client_method.php',
-          type: 'POST',
-          data: formData,
-          success: function(response) {
-            if (response == 'Success') {
-              console.log(response);
+            url: '../method/project_type_method.php',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response == 'Success') {
+                    console.log(response);
 
-              $('#responseMessage').text('Client Added Successfully').css('color', 'green');
-            } else {
-              $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
+                    $('#responseMessage').text('Project Type Added Successfully').css('color', 'green');
+                } else {
+                    $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
             }
-          },
-          error: function(xhr, status, error) {
-            $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
-          }
         });
-      });
     });
+});
 
                     </script>
   </body>

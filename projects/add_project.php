@@ -1,6 +1,7 @@
 <?php
 
 include_once '../connection/common/db_helper.php';
+include_once ('../connection/db.php');
 
 user_not_login();
 ?>
@@ -45,26 +46,31 @@ user_not_login();
                     <form class="forms-sample" id="userForm">
                         <div class="form-group">
                             <label for="exampleInputUsername1">Project Name</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username" name="name" required>
+                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Project Name" name="project_name" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Project Start</label>
-                            <input type="date" class="form-control datepicker" id="exampleInputDate1" placeholder="Date" name="date" required>
+                            <input type="date" class="form-control datepicker" id="exampleInputDate1" placeholder="Date" name="project_start" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Project End</label>
-                            <input type="date" class="form-control datepicker" id="exampleInputDate1" placeholder="Date" name="date" required>
+                            <input type="date" class="form-control datepicker" id="exampleInputDate1" placeholder="Date" name="project_end" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="exampleInputSalary">Project Budget</label>
-                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Monthly Salary" name="salary" required>
+                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Project Budget" name="project_budget" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputStatus">Project Type</label>
-                            <select class="form-control" id="exampleInputStatus" name="status" required>
-                                <option value="0">Enable</option>
-                                <option value="1">Disable</option>
+                            <select class="form-control" id="exampleInputStatus" name="project_type" required>
+                                <?php
+                                  $project_types = get_project_types($conn);
+
+                                  foreach ($project_types as $project_type) {
+                                    echo '<option value="' . $project_type['p_type'] . '">' . $project_type['project_type'] . '</option>';
+                                  }
+                                ?>
                             </select>
                         <div class="form-group">
                             <label for="exampleInputStatus">Status</label>
@@ -74,7 +80,7 @@ user_not_login();
                             </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary me-2">Add User</button>
+                        <button type="submit" class="btn btn-primary me-2">Add Project</button>
                         <button type="reset" class="btn btn-light">Cancel</button>
                     </form>
                     <div id="responseMessage" style="margin-top: 10px;"></div>
@@ -122,14 +128,14 @@ user_not_login();
         e.preventDefault();
         var formData = $(this).serialize();
         $.ajax({
-            url: '../method/user_method.php',
+            url: '../method/project_method.php',
             type: 'POST',
             data: formData,
             success: function(response) {
                 if (response == 'Success') {
                     console.log(response);
 
-                    $('#responseMessage').text('User Added Successfully').css('color', 'green');
+                    $('#responseMessage').text('Project Added Successfully').css('color', 'green');
                 } else {
                     $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
                 }

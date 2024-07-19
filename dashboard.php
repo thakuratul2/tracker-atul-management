@@ -77,7 +77,7 @@ user_not_login();
                             </div>
                             <div>
                               <p class="statistics-title">Total Projects</p>
-                              <h3 class="rate-percentage">68.8</h3>
+                              <h3 class="rate-percentage"><?php get_count_project($conn); ?></h3>
                             </div>
                             <div class="d-none d-md-block">
                               <p class="statistics-title">Avg. Time on Site</p>

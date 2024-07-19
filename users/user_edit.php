@@ -1,6 +1,7 @@
 <?php
 
 include_once '../connection/common/db_helper.php';
+include_once ('../connection/db.php');
 
 user_not_login();
 ?>
@@ -41,45 +42,68 @@ user_not_login();
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Clients > Add Clients</h4>
+                    <h4 class="card-title">Users > Edit Users</h4>
                     <form class="forms-sample" id="userForm">
+                        <?php
+                        if(isset($_GET['id'])) {
+                            $id = $_GET['id'];
+                            $query = "SELECT * FROM users WHERE id = $id";
+                            $result = mysqli_query($conn, $query);
+                            $row = mysqli_fetch_assoc($result);
+                           
+                            $name = $row['name'];
+                            
+                            $email = $row['email'];
+                            $password = $row['password'];
+                            $address = $row['address'];
+                            $mobile = $row['salary'];
+                            $status = $row['status'];
+                        }
+                        ?>
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Client Name</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Client Name" name="name" required>
+                            <label for="exampleInputUsername1">Name</label>
+                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Name" value="<?php echo $name; ?>" name="name" required>
                         </div>
+                       
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Client UserName</label>
-                            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Client Username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Client Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" required>
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" value="<?php echo $email ?>"  required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" value="<?php echo $password ?>"  name="password">
                         </div>
                         
                         <div class="form-group">
                             <label for="exampleInputAddress">Address</label>
-                            <input type="text" class="form-control" id="exampleInputAddress" placeholder="Address" name="address" required>
+                            <input type="text" class="form-control" id="exampleInputAddress" placeholder="Address" name="address" value="<?php echo $address ?>"  required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="exampleInputSalary">Mobile</label>
-                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Mobile" name="mobile" required>
+                            <label for="exampleInputSalary">Salary</label>
+                            <input type="number" class="form-control" id="exampleInputSalary" placeholder="Salary" name="salary" value="<?php echo $mobile ?>"  required>
                         </div>
-                        
+                        <div class="form-group">
+                            <label for="exampleInputStatus">User Role</label>
+                            <select class="form-control" id="exampleInputStatus" name="role_id" required>
+                                <?php
+                                  $userRoles = fetch_roles($conn); 
+                                  foreach ($userRoles as $role) {
+                                    echo '<option value="' . $role['role_id'] . '">' . ucfirst($role['userrole']) . '</option>';
+                                  }
+                                ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputStatus">Status</label>
                             <select class="form-control" id="exampleInputStatus" name="status" required>
-                                <option value="0">Enable</option>
-                                <option value="1">Disable</option>
+                                <option value="0" <?php echo ($status == 0) ? 'selected' : ''; ?>>Enable</option>
+                                <option value="1" <?php echo ($status == 1) ? 'selected' : ''; ?>>Disable</option>
                             </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary me-2">Add Client</button>
-                        <button type="reset" class="btn btn-light">Cancel</button>
+                        <button type="submit" class="btn btn-primary me-2">Update User</button>
+                        <button type="reset" class="btn btn-light">Reset</button>
                     </form>
                     <div id="responseMessage" style="margin-top: 10px;"></div>
                   
@@ -122,35 +146,28 @@ user_not_login();
     <!-- End custom js for this page-->
     <script>
     $(document).ready(function() {
-      $('#userForm').submit(function(e) {
+    $('#userForm').submit(function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
-        var mobile = $('#exampleInputSalary').val();
-        
-        if (mobile.length !== 10) {
-          $('#responseMessage').text('Mobile number must be exactly 10 digits').css('color', 'red');
-          return;
-        }
-        
         $.ajax({
-          url: '../method/client_method.php',
-          type: 'POST',
-          data: formData,
-          success: function(response) {
-            if (response == 'Success') {
-              console.log(response);
+            url: '../method/user_method.php?id=<?php echo $id; ?>',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response == 'Success') {
+                    console.log(response);
 
-              $('#responseMessage').text('Client Added Successfully').css('color', 'green');
-            } else {
-              $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
+                    $('#responseMessage').text('User Updated Successfully').css('color', 'green');
+                } else {
+                    $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
             }
-          },
-          error: function(xhr, status, error) {
-            $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
-          }
         });
-      });
     });
+});
 
                     </script>
   </body>

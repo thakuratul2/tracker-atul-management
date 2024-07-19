@@ -1,6 +1,7 @@
 <?php
 
 include_once '../connection/common/db_helper.php';
+include_once '../connection/db.php';
 
 user_not_login();
 ?>
@@ -65,7 +66,17 @@ user_not_login();
                             <label for="exampleInputSalary">Monthly Salary</label>
                             <input type="number" class="form-control" id="exampleInputSalary" placeholder="Monthly Salary" name="salary" required>
                         </div>
-                        
+                        <div class="form-group">
+                            <label for="exampleInputStatus">User Role</label>
+                            <select class="form-control" id="exampleInputStatus" name="role_id" required>
+                                <?php
+                                  $userRoles = fetch_roles($conn); 
+                                  foreach ($userRoles as $role) {
+                                    echo '<option value="' . $role['role_id'] . '">' . ucfirst($role['userrole']) . '</option>';
+                                  }
+                                ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputStatus">Status</label>
                             <select class="form-control" id="exampleInputStatus" name="status" required>
