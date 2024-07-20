@@ -318,7 +318,7 @@ if (function_exists('get_projects_all')) {
                     echo "<td> <label class='badge badge-success'>Completed</td>";
                 }
                 echo "<td>
-                        <a href='../clients/client_edit.php?p_id=" . $row['p_id'] . "' class='btn btn-success'>Edit</a>
+                        <a href='../projects/edit_project.php?p_id=" . $row['p_id'] . "' class='btn btn-success'>Edit</a>
                         <a href='../projects/delete_project.php?p_id=" . $row['p_id'] . "' class='btn btn-danger'>Delete</a>
                     </td>";
 

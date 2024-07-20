@@ -7,17 +7,21 @@ if(isset($_POST['submit']))
     $name = $_POST['name'];
     $password = $_POST['password'];
    
-    $sql = "SELECT `email`, `id`, `name`, `password` FROM `users` WHERE name = '$name' AND password = MD5('$password')";
+    $sql = "SELECT `email`, `id`, `name`, `password`, `status` FROM `users` WHERE name = '$name' AND password = MD5('$password')";
    
     $result = mysqli_query($conn , $sql);
 
     $user = mysqli_fetch_assoc($result);
     
     if($user > 0){
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
-        $_SESSION['user_email'] = $user['email'];
-         header("location: ../dashboard.php");
+        if($user['status'] == 1){
+            header("location: ../index.php");
+        }else{
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_email'] = $user['email'];
+            header("location: ../dashboard.php");
+        }
     }else{
         $sql = "SELECT `email`, `id`, `username`, `password` FROM `clients` WHERE username = '$name' AND password = MD5('$password')";
         $result = mysqli_query($conn , $sql);
