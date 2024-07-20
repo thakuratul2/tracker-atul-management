@@ -101,31 +101,6 @@ user_not_login();
     <script src="../assets/js/typeahead.js"></script>
     <script src="../assets/js/select2.js"></script>
     <!-- End custom js for this page-->
-    <script>
-    $(document).ready(function() {
-    $('#userForm').submit(function(e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-        $.ajax({
-            url: '../method/user_method.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                if (response == 'Success') {
-                    console.log(response);
-
-                    $('#responseMessage').text('User Added Successfully').css('color', 'green');
-                } else {
-                    $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
-                }
-            },
-            error: function(xhr, status, error) {
-                $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
-            }
-        });
-    });
-});
-
-                    </script>
+ 
   </body>
 </html>

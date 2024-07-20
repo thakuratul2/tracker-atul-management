@@ -89,7 +89,7 @@ user_not_login();
                                 <?php
                                   $userRoles = fetch_roles($conn); 
                                   foreach ($userRoles as $role) {
-                                    echo '<option value="' . $role['role_id'] . '">' . ucfirst($role['userrole']) . '</option>';
+                                    echo '<option value="' . $role['role_id'] . '" ' . ($role['role_id'] == $row['role_id'] ? 'selected' : '') . '>' . ucfirst($role['userrole']) . '</option>';
                                   }
                                 ?>
                             </select>

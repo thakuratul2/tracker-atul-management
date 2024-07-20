@@ -1,7 +1,6 @@
 <?php 
 
 include_once ('../connection/db.php');
-
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -47,3 +46,8 @@ if ($client_id) {
         }
     }
 }
+
+
+if ($client_id && isset($update_stmt)) $update_stmt->close();
+if (!$client_id && isset($check_stmt)) $check_stmt->close();
+if (!$client_id && isset($insert_stmt)) $insert_stmt->close();
