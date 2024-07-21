@@ -9,7 +9,7 @@ $salary = $_POST['salary'];
 $status = $_POST['status'];
 $role = $_POST['role_id'];
 
-$hashed_password = md5($password);
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 $client_id = isset($_GET['id']) ? $_GET['id'] : null;
 

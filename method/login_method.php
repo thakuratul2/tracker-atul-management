@@ -6,14 +6,13 @@ if(isset($_POST['submit']))
 {
     $name = $_POST['name'];
     $password = $_POST['password'];
-   
-    $sql = "SELECT `email`, `id`, `name`, `password`, `status` FROM `users` WHERE name = '$name' AND password = MD5('$password')";
-   
-    $result = mysqli_query($conn , $sql);
 
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "SELECT `email`, `id`, `name`, `password`, `status` FROM `users` WHERE name = '$name'";
+    $result = mysqli_query($conn , $sql);
     $user = mysqli_fetch_assoc($result);
     
-    if($user > 0){
+    if($user && password_verify($password, $user['password'])){
         if($user['status'] == 1){
             header("location: ../index.php");
         }else{
@@ -23,11 +22,11 @@ if(isset($_POST['submit']))
             header("location: ../dashboard.php");
         }
     }else{
-        $sql = "SELECT `email`, `id`, `username`, `password` FROM `clients` WHERE username = '$name' AND password = MD5('$password')";
+        $sql = "SELECT `email`, `id`, `username`, `password` FROM `clients` WHERE username = '$name'";
         $result = mysqli_query($conn , $sql);
         $client = mysqli_fetch_assoc($result);
         
-        if($client > 0){
+        if($client && password_verify($password, $client['password'])){
             $_SESSION['user_id'] = $client['id'];
             $_SESSION['user_name'] = $client['username'];
             $_SESSION['user_email'] = $client['email'];

@@ -11,7 +11,7 @@ $mobile = $_POST['mobile'];
 $status = $_POST['status'];
 
 
-$hashed_password = md5($password);
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 
 $client_id = isset($_GET['id']) ? $_GET['id'] : null;
