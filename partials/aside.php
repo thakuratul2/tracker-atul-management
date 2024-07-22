@@ -120,6 +120,7 @@
                 <div class="dropdown-header text-center">
                   <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
                   <p class="mb-1 mt-3 fw-semibold"><?php echo (ucfirst($_SESSION['user_name'])); ?></p>
+                  <p class="mb-1 mt-3 fw-semibold"><?php echo ucfirst(get_role_added_session($conn)); ?></p>
                   <p class="fw-light text-muted mb-0"> <?php echo ($_SESSION['user_email']); ?></p>
                 </div>
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>

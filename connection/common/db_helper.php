@@ -423,3 +423,40 @@ else
     }
 
 }
+
+if(function_exists('get_role_added_session'))
+{
+    echo "Function get_role_added_session already exists";
+}
+else
+{
+    function get_role_added_session($conn)
+    {
+        $role_id = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+     
+        if($role_id)
+        {
+            try
+            {
+
+                $sql = "SELECT userrole FROM users_role WHERE role_id = $role_id";
+                
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    
+                    $row = $result->fetch_assoc();
+                   
+                    return $row['userrole'];
+                } else {
+                   
+                    return null; 
+                }
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
+        } else {
+            return null; 
+        }
+    }
+}
