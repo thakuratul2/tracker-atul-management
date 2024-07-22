@@ -8,7 +8,7 @@ if(isset($_POST['submit']))
     $password = $_POST['password'];
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "SELECT `email`, `id`, `name`, `password`, `status` FROM `users` WHERE name = '$name'";
+    $sql = "SELECT `email`, `id`, `name`, `role_id` , `password`, `status` FROM `users` WHERE name = '$name'";
     $result = mysqli_query($conn , $sql);
     $user = mysqli_fetch_assoc($result);
     
@@ -19,6 +19,7 @@ if(isset($_POST['submit']))
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_role'] = $user['role_id'];
             header("location: ../dashboard.php");
         }
     }else{

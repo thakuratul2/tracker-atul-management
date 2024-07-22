@@ -385,14 +385,41 @@ else
 {
     function fetch_project_type($conn)
     {
-        $sql = "SELECT * FROM project_type";
-        $result = mysqli_query($conn, $sql);
-        $roles = [];
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $roles[] = $row;
+        try {
+            $sql = "SELECT * FROM project_type";
+            $result = mysqli_query($conn, $sql);
+            $roles = [];
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $roles[] = $row;
+                }
             }
+            return $roles;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-        return $roles;
     }
+}
+
+//Fetch the task record
+
+if(function_exists('manage_task_record'))
+{
+    echo "Function Manage_task_record already exists";
+
+}
+else
+{
+    function manage_task_record($conn)
+    {
+        try {
+            $sql = "SELECT * FROM tasks";
+            $result = mysqli_query($conn, $sql);
+
+            return $result;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 }

@@ -190,7 +190,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#tasks" aria-expanded="false" aria-controls="charts">
-                <i class="menu-icon mdi mdi-chart-line"></i>
+                <i class="menu-icon mdi mdi-checkbox-marked-circle-auto-outline"></i>
                 <span class="menu-title">Tasks</span>
                 <i class="menu-arrow"></i>
               </a>
