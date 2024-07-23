@@ -113,28 +113,78 @@ user_not_login();
     <!-- End custom js for this page-->
     <script>
     $(document).ready(function() {
-    $('#userForm').submit(function(e) {
+      $('#userForm').submit(function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
-        $.ajax({
-            url: '../method/task_method.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                if (response == 'Success') {
-                    console.log(response);
+    
+        var startHour = parseInt($('#exampleInputTime1').val().split(':')[0]);
+        var startMinute = parseInt($('#exampleInputTime1').val().split(':')[1]);
+        var endHour = parseInt($('#exampleInputTime2').val().split(':')[0]);
+        var endMinute = parseInt($('#exampleInputTime2').val().split(':')[1]);
 
-                    $('#responseMessage').text('Task Added Successfully').css('color', 'green');
-                } else {
-                    $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
-                }
-            },
-            error: function(xhr, status, error) {
-                $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
+        // Convert start time to 24-hour format
+        if ($('#exampleInputTime1').val().includes('PM') && startHour != 12) {
+          startHour += 12;
+        } else if ($('#exampleInputTime1').val().includes('AM') && startHour == 12) {
+          startHour = 0;
+        }
+
+        // Convert end time to 24-hour format
+        if ($('#exampleInputTime2').val().includes('PM') && endHour != 12) {
+          endHour += 12;
+        } else if ($('#exampleInputTime2').val().includes('AM') && endHour == 12) {
+          endHour = 0;
+        }
+
+        var startDateTime = new Date($('#exampleInputDate1').val());
+        startDateTime.setHours(startHour, startMinute, 0, 0);
+        var endDateTime = new Date($('#exampleInputDate2').val());
+        endDateTime.setHours(endHour, endMinute, 0, 0);
+        var currentTime = new Date();
+
+        // Check if start date and time is in the future
+        if (startDateTime > currentTime) {
+          $('#responseMessage').text('Error: Dates cannot be in the future').css('color', 'red');
+          return;
+        }
+
+        // Check if end date and time is in the future
+        if (endDateTime > currentTime) {
+          $('#responseMessage').text('Error: Dates cannot be in the future').css('color', 'red');
+          return;
+        }
+
+        // Check if end date and time is before start date and time
+        if (endDateTime <= startDateTime) {
+          $('#responseMessage').text('Error: Dates cannot be in the future').css('color', 'red');
+          return;
+        }
+        // var timeDifference = (endDateTime - startDateTime) / (1000 * 60 * 60); 
+        
+        // if (timeDifference < 1 || timeDifference > 8) {
+        //   $('#responseMessage').text('Error: Task duration must be between 1 hour and 8 hours').css('color', 'red');
+        //   return;
+        // }
+
+        $.ajax({
+          url: '../method/task_method.php',
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            if (response == 'Success') {
+              console.log(response);
+
+              $('#responseMessage').text('Task Added Successfully').css('color', 'green');
+            } else {
+              $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
             }
+          },
+          error: function(xhr, status, error) {
+            $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
+          }
         });
+      });
     });
-});
 
                     </script>
   </body>
