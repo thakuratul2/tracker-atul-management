@@ -26,6 +26,7 @@ user_not_login();
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
     <!-- endinject -->
   </head>
   <body class="with-welcome-text">
