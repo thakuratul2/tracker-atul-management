@@ -10,6 +10,7 @@ if($_GET['t_id'])
         $sql = "DELETE FROM tasks where t_id = '$t_id'";
 
        $result = mysqli_query($conn, $sql);
+       
 
        if($result){
            header('location: all_task.php');
