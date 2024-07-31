@@ -118,6 +118,7 @@
                 <img class="img-xs rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image"> </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
+                  
                   <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
                   <p class="mb-1 mt-3 fw-semibold"><?php echo (ucfirst($_SESSION['user_name'])); ?></p>
                   <p class="mb-1 mt-3 fw-semibold"><?php echo ucfirst(get_role_added_session($conn)); ?></p>
