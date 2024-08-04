@@ -29,6 +29,7 @@ user_not_login();
     
     <!-- endinject -->
   </head>
+  
   <body class="with-welcome-text">
     <div class="container-scroller">
      
