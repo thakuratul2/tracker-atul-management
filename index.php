@@ -42,6 +42,7 @@ user_login();
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" name="name">
                   </div>
+                  
                   <div class="form-group">
                     <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" name="password">
                   </div>
