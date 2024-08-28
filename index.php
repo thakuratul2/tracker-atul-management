@@ -40,9 +40,9 @@ user_login();
                 <h6 class="fw-light">Sign in to continue.</h6>
                 <form class="pt-3" action="./method/login_method.php" method="post">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" name="name">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Enter Email" name="email">
                   </div>
-                  
+
                   <div class="form-group">
                     <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" name="password">
                   </div>

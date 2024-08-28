@@ -4,11 +4,11 @@ include_once ("../connection/db.php");
 
 if(isset($_POST['submit']))
 {
-    $name = $_POST['name'];
+    $email= $_POST['email'];
     $password = $_POST['password'];
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "SELECT `email`, `id`, `name`, `role_id` , `password`, `status` FROM `users` WHERE name = '$name'";
+    $sql = "SELECT `email`, `id`, `name`, `role_id` , `password`, `status` FROM `users` WHERE email = '$email'";
     $result = mysqli_query($conn , $sql);
     $user = mysqli_fetch_assoc($result);
     
@@ -23,7 +23,7 @@ if(isset($_POST['submit']))
             header("location: ../dashboard.php");
         }
     }else{
-        $sql = "SELECT `email`, `id`, `username`, `password` FROM `clients` WHERE username = '$name'";
+        $sql = "SELECT `email`, `id`, `username`, `password` FROM `clients` WHERE email = '$email'";
         $result = mysqli_query($conn , $sql);
         $client = mysqli_fetch_assoc($result);
         
