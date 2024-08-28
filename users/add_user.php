@@ -136,7 +136,7 @@ user_not_login();
         var domain = email.split('@')[1];
         
         if (domain !== 'brsoftsol.com') {
-          $('#responseMessage').text('Invalid email extension').css('color', 'red');
+          $('#responseMessage').text('Missing @brsoftsol.com').css('color', 'red');
           return;
         }
         
