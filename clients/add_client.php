@@ -1,6 +1,7 @@
 <?php
 
 include_once '../connection/common/db_helper.php';
+include_once ('../connection/db.php');
 
 user_not_login();
 ?>
