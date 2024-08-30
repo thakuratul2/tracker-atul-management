@@ -19,8 +19,8 @@ if ($action === 'start') {
         $existingTimerId = $row['timer_id'];
         echo json_encode(['success' => true, 'timerId' => $existingTimerId]);
     } else {
-        // Insert a new record for the start time
-        $sql = "INSERT INTO employee_timer_records (start_time) VALUES ('$currentTime')";
+        // Insert a new record for the start time with end_time as NULL
+        $sql = "INSERT INTO employee_timer_records (start_time, end_time) VALUES ('$currentTime', NULL)";
         
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;
