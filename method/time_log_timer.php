@@ -40,7 +40,7 @@ if ($action === 'start') {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $start_time = $row['start_time'];
-            $duration = strtotime($currentTime) - strtotime($start_time);
+            $duration = strtotime(date('Y-m-d H:i:s')) - strtotime($start_time);
 
             // Update the end time, duration, and updated_at for the specific timer_id
             $sql = "UPDATE employee_timer_records 
