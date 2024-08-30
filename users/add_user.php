@@ -129,28 +129,36 @@ user_not_login();
     <!-- End custom js for this page-->
     <script>
     $(document).ready(function() {
-    $('#userForm').submit(function(e) {
+      $('#userForm').submit(function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
+        var email = $('#exampleInputEmail1').val();
+        var domain = email.split('@')[1];
+        
+        if (domain !== 'brsoftsol.com') {
+          $('#responseMessage').text('Missing @brsoftsol.com').css('color', 'red');
+          return;
+        }
+        
         $.ajax({
-            url: '../method/user_method.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                if (response == 'Success') {
-                    console.log(response);
+          url: '../method/user_method.php',
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            if (response == 'Success') {
+              console.log(response);
 
-                    $('#responseMessage').text('User Added Successfully').css('color', 'green');
-                } else {
-                    $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
-                }
-            },
-            error: function(xhr, status, error) {
-                $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
+              $('#responseMessage').text('User Added Successfully').css('color', 'green');
+            } else {
+              $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
             }
+          },
+          error: function(xhr, status, error) {
+            $('#responseMessage').text('An error occurred: ' + xhr.responseText).css('color', 'red');
+          }
         });
+      });
     });
-});
 
                     </script>
   </body>

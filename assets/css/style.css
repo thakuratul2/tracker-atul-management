@@ -30380,3 +30380,29 @@ dl li {
   outline: 1px solid slategrey;
 }
 /*# sourceMappingURL=maps/style.css.map */
+.clock-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.start-time-text {
+  margin-right: 8px; /* Space between text and clock icon */
+  font-size: 14px;
+  color: #555;
+}
+
+.clock-icon {
+  font-size: 16px; /* Adjust size as needed */
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  padding: 6px; /* Adjust padding for icon size */
+  display: inline-block;
+  width: 30px; /* Set the width to make it circular */
+  height: 30px; /* Set the height to make it circular */
+  text-align: center;
+  line-height: 18px; /* Center the icon vertically */
+  background-color: transparent;
+}
