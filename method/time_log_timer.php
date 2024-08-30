@@ -20,7 +20,7 @@ if ($action === 'start') {
         echo json_encode(['success' => true, 'timerId' => $existingTimerId]);
     } else {
         // Insert a new record for the start time with end_time as NULL
-        $sql = "INSERT INTO employee_timer_records (start_time, end_time) VALUES ('$currentTime', NULL)";
+        $sql = "INSERT INTO employee_timer_records (start_time, end_time, created_at) VALUES (NOW(), NULL, '$currentTime')";
         
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;
@@ -32,7 +32,7 @@ if ($action === 'start') {
 } elseif ($action === 'stop') {
     if ($timerId > 0) {
         // Update the end time for the specific timer_id
-        $sql = "UPDATE employee_timer_records SET end_time = '$currentTime' WHERE timer_id = $timerId AND end_time IS NULL";
+        $sql = "UPDATE employee_timer_records SET end_time = NOW() WHERE timer_id = $timerId AND end_time IS NULL";
         
         if ($conn->query($sql) === TRUE) {
             echo json_encode(['success' => true, 'message' => 'Record updated successfully']);

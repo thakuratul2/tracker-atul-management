@@ -40,8 +40,7 @@ function stopTimer() {
                     minutes = 0;
                     localStorage.setItem('seconds', seconds);
                     localStorage.setItem('minutes', minutes);
-                    document.querySelector('.start-time-text').textContent = 
-                        `Timer Stopped.`;
+                    document.querySelector('.start-time-text').textContent = `Timer Stopped.`;
                     localStorage.setItem('hasInsertedRecord', 'false');
                     timerId = 0;
                     localStorage.setItem('timerId', timerId);
@@ -85,3 +84,14 @@ if (isTimerRunning && timerId) {
         `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
     startTimer();
 }
+
+
+document.getElementById('logout-btn').addEventListener('click', function(e) {
+    e.preventDefault(); 
+
+    if (isTimerRunning) {
+        alert('Error: Timer is running. Please stop the timer before logging out.');
+    } else {
+        window.location.href = '../method/logout_method.php';
+    }
+});
