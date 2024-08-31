@@ -96,3 +96,13 @@ if (isTimerRunning && timerId) {
         `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
     startTimer();
 }
+
+document.getElementById('logout-btn').addEventListener('click', function(e) {
+    e.preventDefault(); 
+
+    if (isTimerRunning) {
+        alert('Error: Timer is running. Please stop the timer before logging out.');
+    } else {
+        window.location.href = '../method/logout_method.php';
+    }
+});
