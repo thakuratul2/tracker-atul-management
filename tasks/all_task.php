@@ -52,10 +52,11 @@ user_not_login();
                             <th>S.No</th>
                             <th>Title</th>
                             <th>Task Date</th>
-                            <th>Time Time</th>
+                            <th>Task Time</th>
+                            <th>Consumed Time</th>
                             <th>Project Name</th>
                             <th>Task Type</th>
-                           
+                           <th>Task Timer</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -67,15 +68,22 @@ user_not_login();
                             
                             $i = 1;
                             while($task = mysqli_fetch_assoc($row)){
+                            
                             ?>
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo $task['title']; ?></td>
                                 <td><?php echo $task['task_start']; ?></td>
                                 <td><?php echo $task['start_time']; ?></td>
+                                <td><?php echo $task['task_used_time']; ?></td>
                                 <td><?php echo $task['project_type']; ?></td>
                                 <td><?php echo $task['task_type']; ?></td>
-                               
+                               <td>
+                            
+    <i class="fa-regular fa-clock clock-icon" style="margin-left:15px"></i>
+
+
+                               </td>
                                 <td>
                                     <a href="delete_task.php?t_id=<?php echo $task['t_id']; ?>" class="badge badge-danger">Delete</a>
                                 </td>
