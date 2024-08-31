@@ -1,3 +1,5 @@
+<script src="https://kit.fontawesome.com/6022364856.js" crossorigin="anonymous"></script>
+
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
           <div class="me-3">
@@ -161,3 +163,5 @@
             </li>
           </ul>
         </nav>
+
+<script src="../assets/js/custom.js"></script>
