@@ -6,6 +6,9 @@ include_once('../connection/common/db_helper.php');
 // Get the current system time
 $currentTime = date('Y-m-d H:i:s');
 
+//send the userid when the timer is running
+$user_id = get_user_get_id();
+
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $timerId = isset($_GET['timer_id']) ? intval($_GET['timer_id']) : 0;
 
@@ -21,7 +24,7 @@ if ($action === 'start') {
         echo json_encode(['success' => true, 'timerId' => $existingTimerId]);
     } else {
         // Insert a new record for the start time
-        $sql = "INSERT INTO employee_timer_records (start_time, end_time, duration) VALUES (NOW(), null, null)";
+        $sql = "INSERT INTO employee_timer_records (user_id, start_time, end_time, duration) VALUES ($user_id, NOW(), null, null)";
         
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;
