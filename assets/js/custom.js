@@ -10,22 +10,19 @@ function formatTime(unit) {
 }
 
 function startTimer() {
-    // Clear existing interval if any
     if (timerInterval) {
         clearInterval(timerInterval);
     }
 
-    timerInterval = setInterval(function() {
+    timerInterval = setInterval(function () {
         seconds++;
         if (seconds >= 60) {
             seconds = 0;
             minutes++;
         }
-        // Update the display
-        document.querySelector('.start-time-text').textContent = 
+        document.querySelector('.start-time-text').textContent =
             `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
-        
-        // Store the updated time in localStorage
+
         localStorage.setItem('seconds', seconds);
         localStorage.setItem('minutes', minutes);
     }, 1000);
@@ -36,20 +33,16 @@ function stopTimer() {
     localStorage.setItem('isTimerRunning', 'false');
 
     if (timerId) {
-        // Store the end time in the database
         fetch(`../method/time_log_timer.php?action=stop&timer_id=${timerId}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.success) {
-                    // Reset timer variables and localStorage
                     seconds = 0;
                     minutes = 0;
                     localStorage.setItem('seconds', seconds);
                     localStorage.setItem('minutes', minutes);
-                    document.querySelector('.start-time-text').textContent = 
+                    document.querySelector('.start-time-text').textContent =
                         `Timer Stopped.`;
-                    // Reset record insertion flag
                     localStorage.setItem('hasInsertedRecord', 'false');
                     timerId = 0;
                     localStorage.setItem('timerId', timerId);
@@ -63,15 +56,13 @@ function stopTimer() {
     }
 }
 
-document.querySelector('.clock-icon').addEventListener('click', function() {
+document.querySelector('.clock-icon').addEventListener('click', function () {
     if (!isTimerRunning) {
-        // Start Timer
         fetch('../method/time_log_timer.php?action=start')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.success) {
-                    timerId = data.timerId; // Retrieve timerId from response
+                    timerId = data.timerId;
                     localStorage.setItem('timerId', timerId);
                     localStorage.setItem('hasInsertedRecord', 'true');
                     startTimer();
@@ -90,15 +81,16 @@ document.querySelector('.clock-icon').addEventListener('click', function() {
     }
 });
 
-// If the timer was running before the page reload, resume it
+// Resume the timer after page reload
 if (isTimerRunning && timerId) {
-    document.querySelector('.start-time-text').textContent = 
+    document.querySelector('.start-time-text').textContent =
         `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
     startTimer();
 }
 
-document.getElementById('logout-btn').addEventListener('click', function(e) {
-    e.preventDefault(); 
+// Prevent logout if the timer is running
+document.getElementById('logout-btn').addEventListener('click', function (e) {
+    e.preventDefault();
 
     if (isTimerRunning) {
         alert('Error: Timer is running. Please stop the timer before logging out.');
