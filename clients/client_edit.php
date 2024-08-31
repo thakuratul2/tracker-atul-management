@@ -21,6 +21,8 @@ user_not_login();
     <link rel="stylesheet" href="../assets/vendors/typicons/typicons.css">
     <link rel="stylesheet" href="../assets/vendors/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
     <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->

@@ -23,6 +23,8 @@ user_not_login();
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- endinject -->
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="../assets/vendors/select2/select2.min.css">
     <link rel="stylesheet" href="../assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">

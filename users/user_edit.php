@@ -13,6 +13,8 @@ user_not_login();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <?php include '../partials/title.php';
    ?>
+       <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
