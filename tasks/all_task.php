@@ -3,6 +3,18 @@ include_once '../connection/common/db_helper.php';
 include_once '../connection/db.php';
 user_not_login();
 $row = manage_task_record($conn);
+
+// Determine if 'Performance' column should be displayed
+$showPerformanceColumn = false;
+if (mysqli_num_rows($row) > 0) {
+    mysqli_data_seek($row, 0); // Reset result pointer to the start
+    while ($task = mysqli_fetch_assoc($row)) {
+        if (!empty($task['performance'])) {
+            $showPerformanceColumn = true;
+            break;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +72,7 @@ $row = manage_task_record($conn);
                                                 <th>Task Date</th>
                                                 <th>Task Time</th>
                                                 <th>Consumed Time</th>
-                                                <?php if (!empty($task['performance'])): ?>
+                                                <?php if ($showPerformanceColumn): ?>
                                                     <th>Performance</th>
                                                 <?php endif; ?>
                                                 <th>Project Name</th>
@@ -71,6 +83,7 @@ $row = manage_task_record($conn);
                                         </thead>
                                         <tbody>
                                             <?php 
+                                            mysqli_data_seek($row, 0); // Reset result pointer to the start again
                                             if (mysqli_num_rows($row) > 0) {
                                                 $i = 1;
                                                 while ($task = mysqli_fetch_assoc($row)) {
@@ -81,8 +94,8 @@ $row = manage_task_record($conn);
                                                     <td><?php echo $task['task_start']; ?></td>
                                                     <td><?php echo $task['start_time']; ?></td>
                                                     <td><?php echo $task['task_used_time'] ?? "00:00"; ?></td>
-                                                    <?php if (!empty($task['performance'])): ?>
-                                                        <td class="performance"><?php echo htmlspecialchars($task['performance']); ?></td>
+                                                    <?php if ($showPerformanceColumn): ?>
+                                                        <td class="performance" style="color:red;"><?php echo htmlspecialchars($task['performance']); ?></td>
                                                     <?php endif; ?>
                                                     <td><?php echo $task['project_type']; ?></td>
                                                     <td><?php echo $task['task_type']; ?></td>
@@ -99,7 +112,7 @@ $row = manage_task_record($conn);
                                             } else {
                                             ?>
                                                 <tr>
-                                                    <td colspan="<?php echo !empty($task['performance']) ? 10 : 9; ?>" style="text-align: center;">No tasks created yet.</td>
+                                                    <td colspan="<?php echo $showPerformanceColumn ? 10 : 9; ?>" style="text-align: center;">No tasks created yet.</td>
                                                 </tr>
                                             <?php 
                                             }
@@ -201,5 +214,6 @@ $row = manage_task_record($conn);
             });
         });
     </script>
+
 </body>
 </html>

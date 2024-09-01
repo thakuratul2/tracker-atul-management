@@ -30406,10 +30406,3 @@ dl li {
   line-height: 18px; /* Center the icon vertically */
   background-color: transparent;
 }
-.hidden {
-  display: none;
-}
-
-.performance {
-  color: red;
-}
