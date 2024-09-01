@@ -10,7 +10,7 @@ $task_type = $_POST['task_type'] ?? '';
 $task_used_time = $_POST['task_used_time'] ?? ''; 
 $add_user = $_SESSION['user_name'] ?? '';
 $role_id = $_SESSION['user_role'] ?? '';
-$task_id = $_POST['task_id'];
+$task_id = $_POST['task_id'] ?? '';
 
 if (empty($task_used_time)) {
     // Insert new task
