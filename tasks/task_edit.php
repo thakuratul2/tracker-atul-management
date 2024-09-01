@@ -65,11 +65,11 @@ user_not_login();
 
                     <div class="form-group">
                       <label for="exampleInputTask">Task Time</label>
-                      <input type="time" class="form-control" id="TaskTime" placeholder="Task Time" name="start_time" value="<?php echo $start_time ?>" readonly>
+                      <input type="text" class="form-control" id="TaskTime" placeholder="Task Time" name="start_time" value="<?php echo $start_time ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputConsumed">Consumed Time</label>
-                      <input type="time" class="form-control" id="exampleInputConsumed" placeholder="Consumed Time" name="task_used_time" value="<?php echo $task_used_time ?>" readonly>
+                      <input type="text" class="form-control" id="exampleInputConsumed" placeholder="Consumed Time" name="task_used_time" value="<?php echo $task_used_time ?>" readonly>
                     </div>
 
                     <div class="form-group">
@@ -95,7 +95,7 @@ user_not_login();
 
                     <div class="form-group" id="userRoleDropdown" style="display: none;">
                       <label for="exampleInputStatus">Approval User</label>
-                      <select class="form-control" id="exampleInputRole" name="role_id">
+                      <select class="form-control" id="exampleInputRole" name="approval_person">
                         <?php
                           $userRoles = fetch_users($conn);
                          
@@ -166,12 +166,12 @@ user_not_login();
             e.preventDefault();
             var formData = $(this).serialize();
             $.ajax({
-                url: '../method/user_method.php?t_id=<?php echo $t_id; ?>',
+                url: '../method/task_update.php?t_id=<?php echo $t_id; ?>',
                 type: 'POST',
                 data: formData,
                 success: function(response) {
                     if (response == 'Success') {
-                        $('#responseMessage').text('User Updated Successfully').css('color', 'green');
+                        $('#responseMessage').text('Task Updated Successfully').css('color', 'green');
                     } else {
                         $('#responseMessage').text('An error occurred: ' + response).css('color', 'red');
                     }
