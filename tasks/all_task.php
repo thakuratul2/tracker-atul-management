@@ -18,6 +18,7 @@ if (mysqli_num_rows($row) > 0) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -46,11 +47,13 @@ if (mysqli_num_rows($row) > 0) {
         .hidden {
             display: none;
         }
+
         .performance {
             color: red;
         }
     </style>
 </head>
+
 <body>
     <div class="container-scroller">
         <!-- partial:../partials/_navbar.html -->
@@ -82,42 +85,48 @@ if (mysqli_num_rows($row) > 0) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
+                                            <?php
                                             mysqli_data_seek($row, 0); // Reset result pointer to the start again
                                             if (mysqli_num_rows($row) > 0) {
                                                 $i = 1;
                                                 while ($task = mysqli_fetch_assoc($row)) {
-                                            ?>
-                                                <tr>
-                                                    <td><?php echo $i++; ?></td>
-                                                    <td><?php echo $task['title']; ?></td>
-                                                    <td><?php echo $task['task_start']; ?></td>
-                                                    <td><?php echo $task['start_time']; ?></td>
-                                                    <td><?php echo $task['task_used_time'] ?? "00:00"; ?></td>
-                                                    <?php if ($showPerformanceColumn): ?>
-                                                        <td class="performance" style="color:red;"><?php echo htmlspecialchars($task['performance']); ?></td>
-                                                    <?php endif; ?>
-                                                    <td><?php echo $task['project_type']; ?></td>
-                                                    <td><?php echo $task['task_type']; ?></td>
-                                                    <td>
-                                                        <i class="fa-regular fa-clock clock-icon-timer" data-task-id="<?php echo $task['t_id']; ?>" style="margin-left:15px; cursor: pointer;"></i>
-                                                        <span class="stopwatch-timer" id="timer-<?php echo $task['t_id']; ?>" style="margin-left:10px;"></span>
-                                                    </td>
-                                                  
-                                                    <td>
-                                                    <a href="task_edit.php?t_id=<?php echo $task['t_id']; ?>" class="badge badge-info">Edit</a>
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $i++; ?></td>
+                                                        <td><?php echo $task['title']; ?></td>
+                                                        <td><?php echo $task['task_start']; ?></td>
+                                                        <td><?php echo $task['start_time']; ?></td>
+                                                        <td><?php echo $task['task_used_time'] ?? "00:00"; ?></td>
+                                                        <?php if ($showPerformanceColumn): ?>
+                                                            <td class="performance" style="color:red;">
+                                                                <?php echo htmlspecialchars($task['performance']); ?></td>
+                                                        <?php endif; ?>
+                                                        <td><?php echo $task['project_type']; ?></td>
+                                                        <td><?php echo $task['task_type']; ?></td>
+                                                        <td>
+                                                            <i class="fa-regular fa-clock clock-icon-timer"
+                                                                data-task-id="<?php echo $task['t_id']; ?>"
+                                                                style="margin-left:15px; cursor: pointer;"></i>
+                                                            <span class="stopwatch-timer"
+                                                                id="timer-<?php echo $task['t_id']; ?>"
+                                                                style="margin-left:10px;"></span>
+                                                        </td>
 
-                                                        <a href="delete_task.php?t_id=<?php echo $task['t_id']; ?>" class="badge badge-danger">Delete</a>
-                                                    </td>
-                                                </tr>
-                                            <?php 
+                                                        <td>
+                                                            
+                                                            <a href="delete_task.php?t_id=<?php echo $task['t_id']; ?>"
+                                                                class="badge badge-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php
                                                 }
                                             } else {
-                                            ?>
+                                                ?>
                                                 <tr>
-                                                    <td colspan="<?php echo $showPerformanceColumn ? 10 : 9; ?>" style="text-align: center;">No tasks created yet.</td>
+                                                    <td colspan="<?php echo $showPerformanceColumn ? 10 : 9; ?>"
+                                                        style="text-align: center;">No tasks created yet.</td>
                                                 </tr>
-                                            <?php 
+                                            <?php
                                             }
                                             ?>
                                         </tbody>
@@ -148,7 +157,7 @@ if (mysqli_num_rows($row) > 0) {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const clockIcons = document.querySelectorAll('.clock-icon-timer');
-            
+
             clockIcons.forEach(clockIcon => {
                 let timerInterval;
                 let startTime;
@@ -190,16 +199,18 @@ if (mysqli_num_rows($row) > 0) {
                         },
                         body: `task_used_time=${taskUsedTime}&task_id=${taskId}`
                     })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log(data); // Handle server response here
-                    });
+                        .then(response => response.text())
+                        .then(data => {
+                           
+                            window.location.href = `task_edit.php?t_id=${taskId}`;
+                        });
                 }
+
 
                 clockIcon.addEventListener('click', function () {
                     const taskId = clockIcon.getAttribute('data-task-id');
                     const timerDisplay = document.getElementById(`timer-${taskId}`);
-                    
+
                     if (!timerInterval) {
                         startTime = new Date();
                         localStorage.setItem(`timerStartTime-${taskId}`, startTime.toISOString());
@@ -219,4 +230,5 @@ if (mysqli_num_rows($row) > 0) {
     </script>
 
 </body>
+
 </html>

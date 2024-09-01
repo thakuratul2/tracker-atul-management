@@ -41,7 +41,7 @@ user_not_login();
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Users > Edit Task</h4>
+                  <h4 class="card-title">Task > Edit Task</h4>
                   <form class="forms-sample" id="userForm">
                     <?php
                     if(isset($_GET['t_id'])) {
