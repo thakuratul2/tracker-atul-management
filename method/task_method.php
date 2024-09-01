@@ -31,24 +31,32 @@ if (empty($task_used_time)) {
         exit();
     }
 
-    // Fetch existing task_used_time
-    $sql = "SELECT task_used_time FROM tasks WHERE t_id = '$task_id'";
+    // Fetch existing task_used_time and start_time
+    $sql = "SELECT task_used_time, start_time FROM tasks WHERE t_id = '$task_id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
     if ($row) {
         $existing_time = $row['task_used_time'];
-        
+        $start_time = $row['start_time'];
+
         // Convert existing and new times to total seconds
         $existing_seconds = convertToSeconds($existing_time);
         $new_seconds = convertToSeconds($task_used_time);
+        $start_seconds = convertToSeconds($start_time);
 
         // Add new time to existing time
         $total_seconds = $existing_seconds + $new_seconds;
         $total_time = convertToTimeFormat($total_seconds);
 
-        // Update the task with the new time
-        $sql = "UPDATE tasks SET task_used_time = '$total_time' WHERE t_id = '$task_id'";
+        // Determine performance message
+        $performance_message = '';
+        if ($total_seconds > $start_seconds) {
+            $performance_message = 'You consumed the time more than the allotted time';
+        }
+
+        // Update the task with the new time and performance message
+        $sql = "UPDATE tasks SET task_used_time = '$total_time', performance = '$performance_message' WHERE t_id = '$task_id'";
         $update_result = mysqli_query($conn, $sql);
 
         if ($update_result) {
@@ -62,15 +70,25 @@ if (empty($task_used_time)) {
 }
 
 function convertToSeconds($time) {
-    list($hours, $minutes, $seconds) = explode(':', $time);
-    return ($hours * 3600) + ($minutes * 60) + $seconds;
+    // Validate input format
+    if (preg_match('/^(\d{2}):(\d{2}):(\d{2})$/', $time, $matches)) {
+        list(, $hours, $minutes, $seconds) = $matches;
+        return ($hours * 3600) + ($minutes * 60) + $seconds;
+    } else {
+        
+        return 0; 
+    }
+    
 }
 
-
 function convertToTimeFormat($seconds) {
+    if (!is_numeric($seconds)) {
+        // Handle non-numeric input
+        return "00:00:00";
+    }
+
     $hours = str_pad(floor($seconds / 3600), 2, '0', STR_PAD_LEFT);
     $minutes = str_pad(floor(($seconds % 3600) / 60), 2, '0', STR_PAD_LEFT);
     $seconds = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
     return "$hours:$minutes:$seconds";
 }
-
