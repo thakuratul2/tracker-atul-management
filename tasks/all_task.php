@@ -103,7 +103,10 @@ if (mysqli_num_rows($row) > 0) {
                                                         <i class="fa-regular fa-clock clock-icon-timer" data-task-id="<?php echo $task['t_id']; ?>" style="margin-left:15px; cursor: pointer;"></i>
                                                         <span class="stopwatch-timer" id="timer-<?php echo $task['t_id']; ?>" style="margin-left:10px;"></span>
                                                     </td>
+                                                  
                                                     <td>
+                                                    <a href="task_edit.php?t_id=<?php echo $task['t_id']; ?>" class="badge badge-info">Edit</a>
+
                                                         <a href="delete_task.php?t_id=<?php echo $task['t_id']; ?>" class="badge badge-danger">Delete</a>
                                                     </td>
                                                 </tr>
