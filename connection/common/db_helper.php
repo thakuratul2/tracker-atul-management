@@ -377,6 +377,26 @@ else
     }
 }
 
+if(function_exists('fetch_users'))
+{
+    echo "Function fetch_user already exists";
+}
+else
+{
+    function fetch_users($conn)
+    {
+        $sql = "SELECT * FROM users";
+        $result = mysqli_query($conn, $sql);
+        $roles = [];
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $roles[] = $row;
+            }
+        }
+        return $roles;
+    }
+}
+
 if(function_exists('fetch_project_tupe'))
 {
     echo "Function fetch_roles already exists";
