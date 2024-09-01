@@ -78,12 +78,11 @@ user_not_login();
                                 <td><?php echo $task['task_used_time']; ?></td>
                                 <td><?php echo $task['project_type']; ?></td>
                                 <td><?php echo $task['task_type']; ?></td>
-                               <td>
-                            
-    <i class="fa-regular fa-clock clock-icon" style="margin-left:15px"></i>
+                                <td>
+    <i class="fa-regular fa-clock clock-icon-timer" style="margin-left:15px; cursor: pointer;"></i>
+    <span class="stopwatch-timer" style="margin-left:10px;"></span>
+</td>
 
-
-                               </td>
                                 <td>
                                     <a href="delete_task.php?t_id=<?php echo $task['t_id']; ?>" class="badge badge-danger">Delete</a>
                                 </td>
@@ -99,37 +98,76 @@ user_not_login();
               
             </div>
           </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:../partials/_footer.html -->
+         
           <?php include_once '../partials/footer.php'; ?>
 
-          <!-- partial -->
+         
         </div>
-        <!-- main-panel ends -->
+        
       </div>
-      <!-- page-body-wrapper ends -->
+   
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
+  
     <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
+   
     <script src="../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
     <script src="../assets/vendors/select2/select2.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
+    
     <script src="../assets/js/off-canvas.js"></script>
     <script src="../assets/js/template.js"></script>
     <script src="../assets/js/settings.js"></script>
     <script src="../assets/js/hoverable-collapse.js"></script>
     <script src="../assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
+
     <script src="../assets/js/file-upload.js"></script>
     <script src="../assets/js/typeahead.js"></script>
     <script src="../assets/js/select2.js"></script>
-    <!-- End custom js for this page-->
- 
+  
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const clockIcon = document.querySelector('.clock-icon-timer');
+    const timerDisplay = document.querySelector('.stopwatch-timer');
+    let timerInterval;
+
+    function startTimer(startTime) {
+        timerInterval = setInterval(function () {
+            const currentTime = new Date();
+            const elapsedTime = currentTime - new Date(startTime);
+            const elapsedSeconds = Math.floor(elapsedTime / 1000);
+
+            const hours = String(Math.floor(elapsedSeconds / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((elapsedSeconds % 3600) / 60)).padStart(2, '0');
+            const seconds = String(elapsedSeconds % 60).padStart(2, '0');
+
+            timerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        localStorage.removeItem('timerStartTime');
+    }
+
+    clockIcon.addEventListener('click', function () {
+        if (!timerInterval) {
+            const startTime = new Date();
+            localStorage.setItem('timerStartTime', startTime);
+            startTimer(startTime);
+        } else {
+            stopTimer();
+        }
+    });
+
+    // Check if a timer was already running
+    const savedStartTime = localStorage.getItem('timerStartTime');
+    if (savedStartTime) {
+        startTimer(savedStartTime);
+    }
+});
+
+
+ </script>
   </body>
 </html>
