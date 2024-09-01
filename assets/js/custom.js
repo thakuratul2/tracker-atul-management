@@ -1,12 +1,15 @@
 let isTimerRunning = localStorage.getItem('isTimerRunning') === 'true';
 let timerInterval;
-let seconds = parseInt(localStorage.getItem('seconds')) || 0;
-let minutes = parseInt(localStorage.getItem('minutes')) || 0;
-let hasInsertedRecord = localStorage.getItem('hasInsertedRecord') === 'true';
 let timerId = localStorage.getItem('timerId') || 0;
+let startTime = parseInt(localStorage.getItem('startTime')) || 0;
 
 function formatTime(unit) {
     return unit < 10 ? '0' + unit : unit;
+}
+
+function getElapsedTime() {
+    const currentTime = Math.floor(Date.now() / 1000);
+    return currentTime - startTime;
 }
 
 function startTimer() {
@@ -14,16 +17,13 @@ function startTimer() {
         clearInterval(timerInterval);
     }
 
-    timerInterval = setInterval(function() {
-        seconds++;
-        if (seconds >= 60) {
-            seconds = 0;
-            minutes++;
-        }
-        document.querySelector('.start-time-text').textContent = 
+    timerInterval = setInterval(function () {
+        const elapsed = getElapsedTime();
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        
+        document.querySelector('.start-time-text').textContent =
             `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
-        localStorage.setItem('seconds', seconds);
-        localStorage.setItem('minutes', minutes);
     }, 1000);
 }
 
@@ -36,15 +36,11 @@ function stopTimer() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    seconds = 0;
-                    minutes = 0;
-                    localStorage.setItem('seconds', seconds);
-                    localStorage.setItem('minutes', minutes);
+                    startTime = 0;
+                    localStorage.setItem('startTime', startTime);
                     document.querySelector('.start-time-text').textContent = 
                         `Timer Stopped.`;
-                    localStorage.setItem('hasInsertedRecord', 'false');
-                    timerId = 0;
-                    localStorage.setItem('timerId', timerId);
+                    localStorage.setItem('timerId', 0);
                 } else {
                     alert('Error stopping timer.');
                 }
@@ -55,15 +51,16 @@ function stopTimer() {
     }
 }
 
-document.querySelector('.clock-icon').addEventListener('click', function() {
-    if (!isTimerRunning && !hasInsertedRecord) {
+document.querySelector('.clock-icon').addEventListener('click', function () {
+    if (!isTimerRunning) {
         fetch('../method/time_log_timer.php?action=start')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     timerId = data.timerId;
                     localStorage.setItem('timerId', timerId);
-                    localStorage.setItem('hasInsertedRecord', 'true');
+                    startTime = Math.floor(Date.now() / 1000);
+                    localStorage.setItem('startTime', startTime);
                     startTimer();
                     isTimerRunning = true;
                     localStorage.setItem('isTimerRunning', 'true');
@@ -73,15 +70,25 @@ document.querySelector('.clock-icon').addEventListener('click', function() {
                 }
             })
             .catch(error => console.error('Error:', error));
-    } else if (isTimerRunning) {
+    } else {
         stopTimer();
         isTimerRunning = false;
         localStorage.setItem('isTimerRunning', 'false');
     }
 });
 
+// Resume the timer after page reload
 if (isTimerRunning && timerId) {
-    document.querySelector('.start-time-text').textContent = 
-        `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
     startTimer();
 }
+
+// Prevent logout if the timer is running
+document.getElementById('logout-btn').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (isTimerRunning) {
+        alert('Error: Timer is running. Please stop the timer before logging out.');
+    } else {
+        window.location.href = '../method/logout_method.php';
+    }
+});

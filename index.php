@@ -21,6 +21,8 @@ user_login();
     <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">

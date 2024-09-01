@@ -1,3 +1,5 @@
+<script src="https://kit.fontawesome.com/6022364856.js" crossorigin="anonymous"></script>
+
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
           <div class="me-3">
@@ -44,7 +46,9 @@
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
                 <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
-                <a class="dropdown-item" href="../method/logout_method.php"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+                <a class="dropdown-item" href="#" id="logout-btn">
+    <i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out
+</a>
               </div>
             </li>
           </ul>
@@ -159,3 +163,5 @@
             </li>
           </ul>
         </nav>
+
+<script src="../assets/js/custom.js"></script>

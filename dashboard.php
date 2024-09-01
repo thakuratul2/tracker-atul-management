@@ -18,8 +18,9 @@ user_not_login();
     <link rel="stylesheet" href="assets/vendors/typicons/typicons.css">
     <link rel="stylesheet" href="assets/vendors/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-    <script src="https://kit.fontawesome.com/6022364856.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
@@ -780,7 +781,6 @@ user_not_login();
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
     <script src="assets/js/todolist.js"></script>
-    <script src="assets/js/custom.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>

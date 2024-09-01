@@ -1,9 +1,13 @@
 <?php
 
 include_once('../connection/db.php');
+include_once('../connection/common/db_helper.php');
 
 // Get the current system time
 $currentTime = date('Y-m-d H:i:s');
+
+//send the userid when the timer is running
+$user_id = get_user_get_id();
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $timerId = isset($_GET['timer_id']) ? intval($_GET['timer_id']) : 0;
@@ -19,8 +23,8 @@ if ($action === 'start') {
         $existingTimerId = $row['timer_id'];
         echo json_encode(['success' => true, 'timerId' => $existingTimerId]);
     } else {
-        // Insert a new record for the start time with end_time as NULL
-        $sql = "INSERT INTO employee_timer_records (start_time, end_time) VALUES ('$currentTime', NULL)";
+        // Insert a new record for the start time
+        $sql = "INSERT INTO employee_timer_records (user_id, start_time, end_time, duration) VALUES ($user_id, NOW(), null, null)";
         
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;
@@ -31,8 +35,11 @@ if ($action === 'start') {
     }
 } elseif ($action === 'stop') {
     if ($timerId > 0) {
-        // Update the end time for the specific timer_id
-        $sql = "UPDATE employee_timer_records SET end_time = '$currentTime' WHERE timer_id = $timerId AND end_time IS NULL";
+        // Calculate the duration between start_time and NOW()
+        $sql = "UPDATE employee_timer_records 
+                SET end_time = NOW(), 
+                    duration = TIMEDIFF(NOW(), start_time) 
+                WHERE timer_id = $timerId AND end_time IS NULL";
         
         if ($conn->query($sql) === TRUE) {
             echo json_encode(['success' => true, 'message' => 'Record updated successfully']);
@@ -46,3 +53,4 @@ if ($action === 'start') {
     echo json_encode(['success' => false, 'message' => 'Invalid action']);
 }
 
+?>
