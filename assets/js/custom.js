@@ -1,12 +1,15 @@
 let isTimerRunning = localStorage.getItem('isTimerRunning') === 'true';
 let timerInterval;
-let seconds = parseInt(localStorage.getItem('seconds')) || 0;
-let minutes = parseInt(localStorage.getItem('minutes')) || 0;
-let hasInsertedRecord = localStorage.getItem('hasInsertedRecord') === 'true';
-let timerId = localStorage.getItem('timerId') || 0; // Store timer ID
+let timerId = localStorage.getItem('timerId') || 0;
+let startTime = parseInt(localStorage.getItem('startTime')) || 0;
 
 function formatTime(unit) {
     return unit < 10 ? '0' + unit : unit;
+}
+
+function getElapsedTime() {
+    const currentTime = Math.floor(Date.now() / 1000);
+    return currentTime - startTime;
 }
 
 function startTimer() {
@@ -15,16 +18,12 @@ function startTimer() {
     }
 
     timerInterval = setInterval(function () {
-        seconds++;
-        if (seconds >= 60) {
-            seconds = 0;
-            minutes++;
-        }
+        const elapsed = getElapsedTime();
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        
         document.querySelector('.start-time-text').textContent =
             `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
-
-        localStorage.setItem('seconds', seconds);
-        localStorage.setItem('minutes', minutes);
     }, 1000);
 }
 
@@ -37,15 +36,11 @@ function stopTimer() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    seconds = 0;
-                    minutes = 0;
-                    localStorage.setItem('seconds', seconds);
-                    localStorage.setItem('minutes', minutes);
-                    document.querySelector('.start-time-text').textContent =
+                    startTime = 0;
+                    localStorage.setItem('startTime', startTime);
+                    document.querySelector('.start-time-text').textContent = 
                         `Timer Stopped.`;
-                    localStorage.setItem('hasInsertedRecord', 'false');
-                    timerId = 0;
-                    localStorage.setItem('timerId', timerId);
+                    localStorage.setItem('timerId', 0);
                 } else {
                     alert('Error stopping timer.');
                 }
@@ -64,7 +59,8 @@ document.querySelector('.clock-icon').addEventListener('click', function () {
                 if (data.success) {
                     timerId = data.timerId;
                     localStorage.setItem('timerId', timerId);
-                    localStorage.setItem('hasInsertedRecord', 'true');
+                    startTime = Math.floor(Date.now() / 1000);
+                    localStorage.setItem('startTime', startTime);
                     startTimer();
                     isTimerRunning = true;
                     localStorage.setItem('isTimerRunning', 'true');
@@ -83,8 +79,6 @@ document.querySelector('.clock-icon').addEventListener('click', function () {
 
 // Resume the timer after page reload
 if (isTimerRunning && timerId) {
-    document.querySelector('.start-time-text').textContent =
-        `Running Timer: ${formatTime(minutes)}:${formatTime(seconds)}`;
     startTimer();
 }
 
