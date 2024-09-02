@@ -44,7 +44,7 @@
                   
                   <div class="mt-3 d-grid gap-2">
 
-                    <button class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn" type="submit" name="submit">FORGOT NOW</button>
+                    <button class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn" type="submit" name="submit_reset_password">FORGOT NOW</button>
                   </div>
                   <div class="mt-3 d-grid gap-2">
 
