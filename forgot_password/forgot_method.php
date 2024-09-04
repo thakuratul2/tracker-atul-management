@@ -1,9 +1,39 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
 include_once ('../connection/db.php');
 
 function send_password_mail($get_name, $get_email, $token)
 {
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'cf61b70e4ec79f';                     //SMTP username
+    $mail->Password   = '49d4fa1555980a';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+    //Recipients
+    $mail->setFrom('pratapsinghatul111@gmail.com', $get_name);
+    $mail->addAddress($get_email);     //Add a recipient
+      //Optional name
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Reset Password Notification';
+    $mail_template = 
+    ""
+
+    $mail->send();
+    echo 'Message has been sent';
+
 
 }
 
