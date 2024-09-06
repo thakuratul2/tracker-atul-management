@@ -9,7 +9,7 @@ user_login();
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Project Tracker System </title>
+    <?php include_once ('partials/title.php'); ?>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -19,6 +19,12 @@ user_login();
     <link rel="stylesheet" href="assets/vendors/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" type="image/x-icon">
@@ -69,6 +75,13 @@ user_login();
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <div id="toastMessage" class="toast align-items-center text-bg-success border-0 position-fixed bottom-0 end-0 m-3" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="d-flex">
+                    <div class="toast-body">
+                      <!-- Message will be inserted here -->
+                    </div>
+                  </div>
+                </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
@@ -82,6 +95,42 @@ user_login();
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
     <script src="assets/js/todolist.js"></script>
+    <script>
+        function showToast(message, type = 'success') {
+          var toastElement = document.getElementById('toastMessage');
+
+          // Set the toast message
+          toastElement.querySelector('.toast-body').innerHTML = message;
+
+          // Set the background color based on the type (success or error)
+          if (type === 'success') {
+            toastElement.classList.remove('text-bg-danger');
+            toastElement.classList.add('text-bg-success');
+          } else if (type === 'error') {
+            toastElement.classList.remove('text-bg-success');
+            toastElement.classList.add('text-bg-danger');
+          }
+
+          // Initialize and show the toast
+          var toast = new bootstrap.Toast(toastElement);
+          toast.show();
+
+         
+          setTimeout(function () {
+            toast.hide();
+          }, 5000);
+        }
+
+        // Check if there's a session message to display
+        <?php if (isset($_SESSION['message'])): ?>
+          showToast('<?php echo $_SESSION['message']; ?>', '<?php echo $_SESSION['message_type']; ?>');
+          <?php
+          // Clear the message after displaying
+          unset($_SESSION['message']);
+          unset($_SESSION['message_type']);
+          ?>
+        <?php endif; ?>
+      </script>
     <!-- endinject -->
   </body>
 </html>
