@@ -480,3 +480,45 @@ else
         }
     }
 }
+if(function_exists('task_status'))
+{
+    echo "Function task_status already exists";
+}
+else
+{
+    function task_status($conn)
+    {
+        $status = "SELECT status from tasks";
+
+        $result = mysqli_query($conn, $status);
+
+        if($result == 0)
+        {
+            return "Pending";
+        }
+        else if($result == 1)
+        {
+            return "Client Approval";
+        }
+        else if($result == 2)
+        {
+            return "Internal Approval";
+        }
+        else if($result == 3)
+        {
+            return "Completed";
+        }
+        else if($result == 4)
+        {
+            return "Incomplete";
+        }
+        else if($result == 5)
+        {
+            return "In Progress";
+        }
+        else
+        {
+            return "Unknown";
+        }
+    }
+}

@@ -75,6 +75,7 @@ if (mysqli_num_rows($row) > 0) {
                                                 <th>Task Date</th>
                                                 <th>Task Time</th>
                                                 <th>Consumed Time</th>
+                                                <th>Status</th>
                                                 <?php if ($showPerformanceColumn): ?>
                                                     <th>Performance</th>
                                                 <?php endif; ?>
