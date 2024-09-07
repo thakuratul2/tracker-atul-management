@@ -1,2 +1,5 @@
 /connection/db
 ./db_files
+composer.json
+composer.lock
+vendor
