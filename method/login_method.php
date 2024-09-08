@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables for client
             $_SESSION['user_id'] = $client['id'];
             $_SESSION['user_name'] = $client['username'];
+            
             $_SESSION['user_email'] = $client['email'];
 
             echo json_encode(['success' => true, 'redirect' => 'dashboard.php']);
