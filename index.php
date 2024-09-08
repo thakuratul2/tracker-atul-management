@@ -46,17 +46,16 @@ user_login();
                 </div> -->
                 <h4>Hello! let's get started</h4>
                 <h6 class="fw-light">Sign in to continue.</h6>
-                <form class="pt-3" action="./method/login_method.php" method="post">
+                <form id="loginForm" class="pt-3">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Enter Email" name="email">
+                    <input type="text" class="form-control form-control-lg" id="email" placeholder="Enter Email" name="email">
                   </div>
 
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" name="password">
+                    <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" name="password">
                   </div>
                   <div class="mt-3 d-grid gap-2">
-
-                    <button class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn" type="submit" name="submit">SIGN IN</button>
+                    <button class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn" type="submit">SIGN IN</button>
                   </div>
                   <div class="my-2 d-flex justify-content-between align-items-center">
                     <div class="form-check">
@@ -64,7 +63,6 @@ user_login();
                         <input type="checkbox" class="form-check-input"> Keep me signed in </label>
                     </div>
                     <a href="forgot_password/forgot_password.php" class="auth-link text-black">Forgot password?</a>
-                  </div>
                   </div>
                 </form>
               </div>
@@ -95,6 +93,40 @@ user_login();
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
     <script src="assets/js/todolist.js"></script>
+    
+    <script>
+       $(document).ready(function() {
+          $('#loginForm').submit(function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            var email = $('#email').val();
+            var password = $('#password').val();
+
+            $.ajax({
+              url: './method/login_method.php',
+              type: 'POST',
+              data: {
+                email: email,
+                password: password
+              },
+              success: function(response) {
+                var result = JSON.parse(response);
+                if (result.success) {
+                  showToast('Login successful!', 'success');
+                  setTimeout(function() {
+                    window.location.href = 'dashboard.php'; // Redirect to dashboard or desired page
+                  }, 1500);
+                } else {
+                  showToast(result.message || 'Login failed. Please try again.', 'error');
+                }
+              },
+              error: function(xhr, status, error) {
+                showToast('Something went wrong. Please try again later.', 'error');
+              }
+            });
+          });
+        });
+        </script>
     <script>
         function showToast(message, type = 'success') {
           var toastElement = document.getElementById('toastMessage');
