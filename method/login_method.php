@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             echo json_encode(['success' => true, 'redirect' => 'dashboard.php']);
         } else {
+            
             // Invalid email or password
             if ($client) {
                 // Email exists but password is incorrect
