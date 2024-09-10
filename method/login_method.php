@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($client && password_verify($password, $client['password'])) {
             // Set session variables for client
             $_SESSION['user_id'] = $client['id'];
+            
             $_SESSION['user_name'] = $client['username'];
             
             $_SESSION['user_email'] = $client['email'];
