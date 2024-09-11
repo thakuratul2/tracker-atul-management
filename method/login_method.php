@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $client = mysqli_fetch_assoc($result);
 
         if ($client && password_verify($password, $client['password'])) {
+            
             // Set session variables for client
             $_SESSION['user_id'] = $client['id'];
             
