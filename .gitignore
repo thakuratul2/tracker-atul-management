@@ -3,3 +3,4 @@
 composer.json
 composer.lock
 vendor
+db_changes.txt
